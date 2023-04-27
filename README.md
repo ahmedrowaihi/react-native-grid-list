@@ -15,13 +15,13 @@
 ## Installation
 
 ```
-yarn add react-native-grid-list
+yarn add react-native-grid-list-functional
 ```
 
 or
 
 ```
-npm install react-native-grid-list --save
+npm install react-native-grid-list-functional --save
 ```
 
 ## Example
