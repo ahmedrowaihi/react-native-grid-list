@@ -3,9 +3,9 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Animated, FlatList, View } from 'react-native';
 
 import { colors } from '../../themes';
-import generateStyles from './styles';
+import generateStyles from '../GridList/styles';
 
-const GridList = ({
+export const GridList = ({
   animationDuration = 500,
   animationInitialBackgroundColor = colors.white,
   itemStyle = {},
@@ -20,15 +20,17 @@ const GridList = ({
 }) => {
   const [animatedValue, setAnimatedValue] = useState([]);
   const [animations, setAnimations] = useState([]);
+  const [styles, setStyles] = useState({});
   const flatListRef = useRef(null);
-  const stylesRef = useRef({});
   const setup = useMemo(() => {
     if (children) {
       return children;
     } else if (data) {
       return data;
     }
+    
     return [];
+
   }, [children, data]);
   const _keyExtractor = useCallback((item, index) => index.toString(), []);
 
@@ -45,7 +47,8 @@ const GridList = ({
       stylesOptions.animationInitialBackgroundColor = animationInitialBackgroundColor;
     }
 
-    stylesRef.current = generateStyles(stylesOptions);
+    const newStyles = generateStyles(stylesOptions);
+    setStyles(newStyles);
   }, [animationInitialBackgroundColor, numColumns, separatorBorderColor, separatorBorderWidth, showAnimation, showSeparator]);
 
   useEffect(() => {
@@ -67,22 +70,23 @@ const GridList = ({
   }, [animationDuration, numColumns, setup, showAnimation]);
 
   const renderItemComponent = useCallback(({ item, index }) => {
-    const viewStyles = [stylesRef.current.itemContainer];
+    const viewStyles = [styles.itemContainer];
     if (showSeparator) {
-      viewStyles.push(stylesRef.current.itemContainerSeparator);
+      viewStyles.push(styles.itemContainerSeparator);
     }
     if (showAnimation) {
-      viewStyles.push(stylesRef.current.itemContainerAnimationStart);
+      viewStyles.push(styles.itemContainerAnimationStart);
     }
 
     viewStyles.push(itemStyle);
 
     return (
+      // eslint-disable-next-line react/jsx-filename-extension
       <View style={viewStyles}>
         {showAnimation ? (
           <Animated.View
             style={[
-              stylesRef.current.itemContainerAnimationEnd,
+              styles.itemContainerAnimationEnd,
               { opacity: animatedValue[index] },
             ]}
           >
@@ -97,15 +101,15 @@ const GridList = ({
         )}
       </View>
     );
-  }, [animatedValue, animations, itemStyle, renderItem, showAnimation, showSeparator]);
+  }, [animatedValue, animations, itemStyle, renderItem, showAnimation, showSeparator, styles]);
 
   return (
     <FlatList
       ref={flatListRef}
-      contentContainerStyle={showSeparator && stylesRef.current.container}
+      contentContainerStyle={showSeparator && styles.container}
       keyExtractor={_keyExtractor}
       ItemSeparatorComponent={() =>
-        showSeparator ? <View style={stylesRef.current.separator} /> : null
+        showSeparator ? <View style={styles.separator} /> : null
       }
       showsVerticalScrollIndicator={false}
       data={setup}
@@ -114,5 +118,3 @@ const GridList = ({
     />
   );
 };
-
-export default GridList;
