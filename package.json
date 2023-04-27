@@ -1,18 +1,18 @@
 {
-  "name": "react-native-grid-list",
+  "name": "react-native-grid-list-functional",
   "version": "1.1.0",
   "main": "index.js",
   "license": "Apache-2.0",
   "author": "Ahmed Rowaihi <ahmedrowaihi1@gmail.com> (https://ahmedrowaihi.lol)",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ahmedrowaihi/react-native-grid-list.git"
+    "url": "git+https://github.com/ahmedrowaihi/react-native-grid-list-functional.git"
   },
   "description": "Functional Fork of React native grid list library",
   "bugs": {
-    "url": "https://github.com/ahmedrowaihi/react-native-grid-list/issues"
+    "url": "https://github.com/ahmedrowaihi/react-native-grid-list-functional/issues"
   },
-  "homepage": "https://github.com/ahmedrowaihi/react-native-grid-list#readme",
+  "homepage": "https://github.com/ahmedrowaihi/react-native-grid-list-functional#readme",
   "keywords": [
     "grid list",
     "grid",
